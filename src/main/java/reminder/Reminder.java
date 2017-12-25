@@ -24,9 +24,9 @@ public class Reminder {
     }
 
         public void setNextNightTask() {
-//        Date date = DateUtil.getNextNight();todo
-        Date date = new Date();
-        date.setSeconds(date.getSeconds() + 1);
+        Date date = DateUtil.getNextNight();
+//        Date date = new Date();
+//        date.setSeconds(date.getSeconds() + 1);
         logger.info("new reminder time: " + date);
         EveryNightTask everyNightTask = new EveryNightTask(bot, this);
         timer.schedule(everyNightTask, date);
