@@ -4,6 +4,7 @@ import connection_pool.ConnectionPool;
 import dao.impl.ButtonDao;
 import dao.impl.KeyboardMarkUpDao;
 import dao.impl.MessageDao;
+import dao.impl.ResultDao;
 
 import java.sql.Connection;
 
@@ -57,6 +58,10 @@ public class DaoFactory {
 //
     public ButtonDao getButtonDao() {
         return new ButtonDao(connection);
+    }
+
+    public ResultDao getResultDao() {
+        return new ResultDao(connection);
     }
 //
 //    public ListDao getListDao(String listName) {

@@ -1,6 +1,7 @@
-package tools;
+package tool;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -15,7 +16,8 @@ import java.util.Locale;
  * Created by Yerassyl_Turlygazhy on 06-Mar-17.
  */
 public class DateUtil {
-    private static SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy");
+    private static SimpleDateFormat ddMMyy = new SimpleDateFormat("dd.MM.yy");
+    private static SimpleDateFormat ddMM = new SimpleDateFormat("dd.MM");
 
     //получение ближайшего прошедшего понедельника
     public static Date getThisMonday() {
@@ -110,7 +112,7 @@ public class DateUtil {
     public static String getPastDay() {
         Date date = new Date();
         date.setDate(date.getDate() - 1);
-        return format.format(date);
+        return ddMM.format(date);
     }
 
     public static List<String> getLastMonthSundaysListAsString() {
@@ -125,7 +127,7 @@ public class DateUtil {
 
             String dateAsString = date.toString();
             if (dateAsString.contains("Sun")) {
-                result.add(format.format(date));
+                result.add(ddMM.format(date));
             }
             date.setDate(date.getDate() - 1);
         }
@@ -175,7 +177,7 @@ public class DateUtil {
     }
 
     public static String getFormatted(Date date) {
-        return format.format(date);
+        return ddMM.format(date);
     }
 
     public static int getWeekDay() {
@@ -247,5 +249,13 @@ public class DateUtil {
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         return date.get(weekFields.weekOfWeekBasedYear());
+    }
+
+    public static Date getDate(String date) {
+        try {
+            return ddMM.parse(date);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

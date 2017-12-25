@@ -1,6 +1,5 @@
 package command;
 
-import command.impl.ClearCommand;
 import command.impl.InputCommand;
 import command.impl.MyGoalsCommand;
 import dao.DaoFactory;
@@ -25,8 +24,6 @@ public class CommandFactory {
                 return new MyGoalsCommand();
             case 2:
                 return new InputCommand();
-            case 3:
-                return new ClearCommand();
             default:
                 throw new CommandNotFoundException();
         }
