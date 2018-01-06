@@ -15,7 +15,7 @@ public class InputCommand extends Command {
     @Override
     public boolean execute() {
         if (waitingType == null) {
-            sendResults();
+            Bot.sendResults();
             waitingType = WaitingType.TIME_SLOT;
             return false;
         }
@@ -23,50 +23,11 @@ public class InputCommand extends Command {
             case TIME_SLOT:
                 int index = Integer.parseInt(updateMessageText) - 1;
                 Bot.successIndexes.add(index);
-                sendResults();
+                Bot.sendResults();
                 return false;
             default:
                 throw new RuntimeException();
         }
     }
-
-    private void sendResults() {
-        List<String> dates = new ArrayList<>();
-        int hours = 6;
-        int minutes = 0;
-
-        while (hours < 23) {
-            String e = hours + ":" + minutes;
-            if (minutes == 0) {
-                e += "0";
-            }
-            dates.add(e);
-            if (minutes == 0) {
-                minutes = 30;
-            } else {
-                minutes = 0;
-                hours++;
-            }
-        }
-
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < dates.size(); i++) {
-            String str = (i + 1) + ") " + dates.get(i) + " - ";
-            if (Bot.successIndexes.contains(i)) {
-                str += messageDao.getMessageText(1);//green emoji
-            } else {
-                str += messageDao.getMessageText(2);//red emoji
-            }
-            str = str.trim();
-            if ((i + 1) % 2 == 0) {
-                str += "\n";
-            } else {
-                str += "      ";
-            }
-            s.append(str);
-        }
-        sendMessage(s.toString());
-    }
-
 
 }
