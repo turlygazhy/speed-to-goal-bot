@@ -3,6 +3,7 @@ package main;
 import command.Command;
 import command.CommandFactory;
 import dao.DaoFactory;
+import dao.impl.GoalDao;
 import dao.impl.MessageDao;
 import dao.impl.ResultDao;
 import entity.Result;
@@ -27,10 +28,11 @@ public class Bot extends TelegramLongPollingBot {
     public final static Long ADMIN_CHAT_ID = 293188753L;
     public static final int TWO_WEEKS = 14;
     private Command command = null;
-    public static Set<Integer> successIndexes = new HashSet<>();
+    public static Map<Integer, Integer> successIndexAndGoalId = new HashMap<>();
     private static DaoFactory factory = DaoFactory.getFactory();
     private static ResultDao resultDao = factory.getResultDao();
     private static MessageDao messageDao = factory.getMessageDao();
+    private static GoalDao goalDao = factory.getGoalDao();
     private static Chart chart = new Chart();
 
     @Override
@@ -99,13 +101,13 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public static void saveAndClearResult() {
-        double hours = successIndexes.size() / 2;
+        double hours = successIndexAndGoalId.size() / 2;
         resultDao.insert(DateUtil.getPastDay(), hours);
         clearResults();
     }
 
     public static void clearResults() {
-        successIndexes = new HashSet<>();
+        successIndexAndGoalId = new HashMap<>();
     }
 
     public static void sendChart() {
@@ -151,8 +153,13 @@ public class Bot extends TelegramLongPollingBot {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < dates.size(); i++) {
             String str = (i + 1) + ") " + dates.get(i) + " - ";
-            if (Bot.successIndexes.contains(i)) {
-                str += messageDao.getMessageText(1);//green emoji
+            if (Bot.successIndexAndGoalId.containsKey(i)) {
+                Integer goalId = successIndexAndGoalId.get(i);
+                if (goalId == 0) {
+                    str += messageDao.getMessageText(1);//green emoji
+                } else {
+                    str += goalDao.getEmoji(goalId);
+                }
             } else {
                 str += messageDao.getMessageText(2);//red emoji
             }
