@@ -259,7 +259,7 @@ public class DateUtil {
         }
     }
 
-    public static Date getNextHaltHour() {
+    public static Date nextHaltHour() {
         Date date = new Date();
         int minutes = date.getMinutes();
         if (minutes < 30) {

@@ -25,8 +25,8 @@ public class Reminder {
         setNextHalfHourTask();
     }
 
-    private void setNextHalfHourTask() {
-        Date date = DateUtil.getNextHaltHour();
+    public void setNextHalfHourTask() {
+        Date date = DateUtil.nextHaltHour();
         logger.info("new reminder time: " + date);
         timer.schedule(new EveryHalfHourTask(bot, this), date);
     }

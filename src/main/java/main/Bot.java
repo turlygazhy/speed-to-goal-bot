@@ -7,9 +7,11 @@ import dao.impl.GoalDao;
 import dao.impl.MessageDao;
 import dao.impl.ResultDao;
 import entity.Result;
+import org.telegram.telegrambots.api.methods.ParseMode;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import tool.Chart;
@@ -179,6 +181,22 @@ public class Bot extends TelegramLongPollingBot {
             );
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void sendMessage(String text) {
+        sendMessage(text, ADMIN_CHAT_ID, null);
+    }
+
+    public void sendMessage(String text, Long chatId, ReplyKeyboard keyboard) {
+        try {
+            sendMessage(new SendMessage()
+                    .setText(text)
+                    .setChatId(chatId)
+                    .setReplyMarkup(keyboard)
+                    .setParseMode(ParseMode.HTML)
+            );
+        } catch (TelegramApiException ignored) {
         }
     }
 }
