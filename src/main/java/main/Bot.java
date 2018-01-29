@@ -40,11 +40,10 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Long chatId = update.getMessage().getChatId();
-
         boolean access = checkAccess(chatId);
         if (!access) return;
-
-        String updateMessageText = update.getMessage().getText();// TODO: 06.01.2018 if no text
+        sendMessage("For this moment nothing is work");
+        /*String updateMessageText = update.getMessage().getText();// TODO: 06.01.2018 if no text
         try {
             command = CommandFactory.getCommand(updateMessageText);
         } catch (Exception e1) {
@@ -63,7 +62,7 @@ public class Bot extends TelegramLongPollingBot {
             }
         } else {
             sayCannotHandle(chatId);
-        }
+        }*/
     }
 
     private void sayCannotHandle(Long chatId) {
