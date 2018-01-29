@@ -42,7 +42,8 @@ public class Bot extends TelegramLongPollingBot {
 
         try {
             command = CommandFactory.getCommand(update);
-        } catch (Exception ignored) {
+        } catch (Exception e1) {
+            System.out.println(e1);
         }
         if (command != null) {
             try {
@@ -67,7 +68,8 @@ public class Bot extends TelegramLongPollingBot {
                     .setText("Cannot handle command or incorrect data was inputted")
                     .setReplyMarkup(DaoFactory.getFactory().getKeyboardMarkUpDao().select(1))
             );
-        } catch (TelegramApiException | SQLException ignored) {
+        } catch (TelegramApiException | SQLException e) {
+            System.out.println(e);
         }
     }
 

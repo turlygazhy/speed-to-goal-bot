@@ -258,4 +258,18 @@ public class DateUtil {
             throw new RuntimeException(e);
         }
     }
+
+    public static Date getNextHaltHour() {
+        Date date = new Date();
+        int minutes = date.getMinutes();
+        if (minutes < 30) {
+            date.setMinutes(30);
+            System.out.println(date);
+        } else {
+            date.setMinutes(0);
+            date.setHours(date.getHours() + 1);
+        }
+        date.setSeconds(1);
+        return date;
+    }
 }

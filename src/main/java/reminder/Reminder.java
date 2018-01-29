@@ -3,6 +3,7 @@ package reminder;
 import main.Bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reminder.timer_task.EveryHalfHourTask;
 import reminder.timer_task.EveryNightTask;
 import tool.DateUtil;
 
@@ -20,10 +21,17 @@ public class Reminder {
 
     public Reminder(Bot bot) {
         this.bot = bot;
-        setNextNightTask();//самый важный поток, далее напоминалки
+        setNextNightTask();
+        setNextHalfHourTask();
     }
 
-        public void setNextNightTask() {
+    private void setNextHalfHourTask() {
+        Date date = DateUtil.getNextHaltHour();
+        logger.info("new reminder time: " + date);
+        timer.schedule(new EveryHalfHourTask(bot, this), date);
+    }
+
+    public void setNextNightTask() {
         Date date = DateUtil.getNextNight();
 //        Date date = new Date();
 //        date.setSeconds(date.getSeconds() + 1);
