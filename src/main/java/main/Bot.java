@@ -3,6 +3,8 @@ package main;
 import command.Command;
 import command.CommandFactory;
 import dao.DaoFactory;
+import dao.impl.GoalDao;
+import dao.impl.MessageDao;
 import dao.impl.ResultDao;
 import entity.Result;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -17,10 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Yerassyl_Turlygazhy on 12-Dec-17.
@@ -29,8 +28,11 @@ public class Bot extends TelegramLongPollingBot {
     public final static Long ADMIN_CHAT_ID = 293188753L;
     public static final int TWO_WEEKS = 14;
     private Command command = null;
-    public static Set<Integer> successIndexes = new HashSet<>();
-    private static ResultDao resultDao = DaoFactory.getFactory().getResultDao();
+    public static Map<Integer, Integer> successIndexAndGoalId = new HashMap<>();
+    private static DaoFactory factory = DaoFactory.getFactory();
+    private static ResultDao resultDao = factory.getResultDao();
+    private static MessageDao messageDao = factory.getMessageDao();
+    private static GoalDao goalDao = factory.getGoalDao();
     private static Chart chart = new Chart();
 
     @Override
@@ -40,10 +42,11 @@ public class Bot extends TelegramLongPollingBot {
         boolean access = checkAccess(chatId);
         if (!access) return;
 
+        String updateMessageText = update.getMessage().getText();// TODO: 06.01.2018 if no text
         try {
-            command = CommandFactory.getCommand(update);
+            command = CommandFactory.getCommand(updateMessageText);
         } catch (Exception e1) {
-            System.out.println(e1);
+            System.out.println("No command for '" + updateMessageText + "'");// TODO: 06.01.2018 should be log
         }
         if (command != null) {
             try {
@@ -69,7 +72,7 @@ public class Bot extends TelegramLongPollingBot {
                     .setReplyMarkup(DaoFactory.getFactory().getKeyboardMarkUpDao().select(1))
             );
         } catch (TelegramApiException | SQLException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -98,9 +101,13 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public static void saveAndClearResult() {
-        double hours = successIndexes.size() / 2;
+        double hours = successIndexAndGoalId.size() / 2;
         resultDao.insert(DateUtil.getPastDay(), hours);
-        successIndexes = new HashSet<>();
+        clearResults();
+    }
+
+    public static void clearResults() {
+        successIndexAndGoalId = new HashMap<>();
     }
 
     public static void sendChart() {
@@ -121,6 +128,57 @@ public class Bot extends TelegramLongPollingBot {
                     .setNewPhoto("photo", fileInputStream)
             );
         } catch (TelegramApiException ignored) {
+        }
+    }
+
+    public static void sendResults() {
+        List<String> dates = new ArrayList<>();
+        int hours = 6;
+        int minutes = 0;
+
+        while (hours < 23) {
+            String e = hours + ":" + minutes;
+            if (minutes == 0) {
+                e += "0";
+            }
+            dates.add(e);
+            if (minutes == 0) {
+                minutes = 30;
+            } else {
+                minutes = 0;
+                hours++;
+            }
+        }
+
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < dates.size(); i++) {
+            String str = (i + 1) + ") " + dates.get(i) + " - ";
+            if (Bot.successIndexAndGoalId.containsKey(i)) {
+                Integer goalId = successIndexAndGoalId.get(i);
+                if (goalId == 0) {
+                    str += messageDao.getMessageText(1);//green emoji
+                } else {
+                    str += goalDao.getEmoji(goalId);
+                }
+            } else {
+                str += messageDao.getMessageText(2);//red emoji
+            }
+            str = str.trim();
+            if ((i + 1) % 2 == 0) {
+                str += "\n";
+            } else {
+                str += "      ";
+            }
+            s.append(str);
+        }
+        try {
+            new Bot().sendMessage(
+                    new SendMessage()
+                            .setText(s.toString())
+                            .setChatId(ADMIN_CHAT_ID)
+            );
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
         }
     }
 }
