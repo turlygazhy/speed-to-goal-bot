@@ -214,7 +214,7 @@ public class Bot extends TelegramLongPollingBot {
 
     public static void sendAnswers() {
         for (Map.Entry<String, String> entry : answers.entrySet()) {
-            String key = entry.getKey();
+            String key = entry.getKey();//todo here should be value
             if (key.length() < 2) {
                 key = key + "0";
             }
