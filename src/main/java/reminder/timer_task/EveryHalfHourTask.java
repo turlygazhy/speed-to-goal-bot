@@ -24,7 +24,7 @@ public class EveryHalfHourTask extends TimerTask {
         Date date = new Date();
         if (date.getHours() == 0 && date.getMinutes() == 0) {
             Bot.sendAnswers();
+            Bot.answers = new HashMap<>();
         }
-        Bot.answers = new HashMap<>();
     }
 }
