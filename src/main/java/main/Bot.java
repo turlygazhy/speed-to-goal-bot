@@ -44,12 +44,17 @@ public class Bot extends TelegramLongPollingBot {
         Long chatId = update.getMessage().getChatId();
         boolean access = checkAccess(chatId);
         if (!access) return;
+        String updateMessageText = update.getMessage().getText();
         if (waitingAnswer) {
-            answers.put(DateUtil.getTime(), update.getMessage().getText());
+            answers.put(DateUtil.getTime(), updateMessageText);
             sendMessage("Answer was added");
             waitingAnswer = false;
         } else {
-            sendMessage("For this moment nothing is work");
+            if (updateMessageText.equalsIgnoreCase("showall")) {
+                sendAnswers();
+            } else {
+                sendMessage("For this moment nothing is work");
+            }
         }
         /*
         try {

@@ -4,6 +4,7 @@ import main.Bot;
 import reminder.Reminder;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimerTask;
 
 public class EveryHalfHourTask extends TimerTask {
@@ -21,8 +22,9 @@ public class EveryHalfHourTask extends TimerTask {
         bot.sendMessage("What will you do next half hour?");
         Bot.waitingAnswer = true;
         Date date = new Date();
-        if (date.getHours()==0 && date.getMinutes()==0){
+        if (date.getHours() == 0 && date.getMinutes() == 0) {
             Bot.sendAnswers();
         }
+        Bot.answers = new HashMap<>();
     }
 }
