@@ -47,6 +47,7 @@ public class Bot extends TelegramLongPollingBot {
         if (waitingAnswer) {
             answers.put(DateUtil.getTime(), update.getMessage().getText());
             sendMessage("Answer was added");
+            waitingAnswer = false;
         } else {
             sendMessage("For this moment nothing is work");
         }
