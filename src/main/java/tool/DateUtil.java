@@ -272,4 +272,9 @@ public class DateUtil {
         date.setSeconds(1);
         return date;
     }
+
+    public static String getTime() {
+        Date date = new Date();
+        return date.getHours() + ":" + date.getMinutes();
+    }
 }

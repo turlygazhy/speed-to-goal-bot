@@ -36,14 +36,21 @@ public class Bot extends TelegramLongPollingBot {
     private static MessageDao messageDao = factory.getMessageDao();
     private static GoalDao goalDao = factory.getGoalDao();
     private static Chart chart = new Chart();
+    public static boolean waitingAnswer = false;
+    public static Map<String, String> answers = new HashMap<>();
 
     @Override
     public void onUpdateReceived(Update update) {
         Long chatId = update.getMessage().getChatId();
         boolean access = checkAccess(chatId);
         if (!access) return;
-        sendMessage("For this moment nothing is work");
-        /*String updateMessageText = update.getMessage().getText();// TODO: 06.01.2018 if no text
+        if (waitingAnswer) {
+            answers.put(DateUtil.getTime(), update.getMessage().getText());
+            sendMessage("Answer was added");
+        } else {
+            sendMessage("For this moment nothing is work");
+        }
+        /*
         try {
             command = CommandFactory.getCommand(updateMessageText);
         } catch (Exception e1) {
@@ -196,6 +203,12 @@ public class Bot extends TelegramLongPollingBot {
                     .setParseMode(ParseMode.HTML)
             );
         } catch (TelegramApiException ignored) {
+        }
+    }
+
+    public static void sendAnswers() {
+        for (Map.Entry<String, String> entry : answers.entrySet()) {
+            new Bot().sendMessage(entry.getKey() + " - " + entry.getValue());
         }
     }
 }
