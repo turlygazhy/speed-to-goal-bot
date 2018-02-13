@@ -38,8 +38,7 @@ public class GoalDao {
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
-                String emoji = rs.getString(3);
-                goals.add(new Goal(id, name, emoji));
+                goals.add(new Goal(id, name));
             }
             return goals;
         } catch (SQLException e) {

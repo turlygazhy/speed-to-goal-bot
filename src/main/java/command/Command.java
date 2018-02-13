@@ -8,6 +8,7 @@ import entity.WaitingType;
 import main.Bot;
 import org.telegram.telegrambots.api.methods.ParseMode;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
@@ -33,18 +34,29 @@ public abstract class Command {
     protected ButtonDao buttonDao = factory.getButtonDao();
     protected KeyboardMarkUpDao keyboardMarkUpDao = factory.getKeyboardMarkUpDao();
     protected MessageDao messageDao = factory.getMessageDao();
+    protected Message updateMessage;
 
     public abstract boolean execute();
 
     public void init(Update update, Bot bot) {
-        Message updateMessage = update.getMessage();
+        updateMessage = update.getMessage();
+        if (updateMessage == null) {
+            CallbackQuery callbackQuery = update.getCallbackQuery();
+            updateMessage = callbackQuery.getMessage();
+            updateMessageText = callbackQuery.getData();
+        } else {
+            updateMessageText = updateMessage.getText();
+        }
         this.bot = bot;
-        updateMessageText = updateMessage.getText();
         chatId = updateMessage.getChatId();
     }
 
     protected void sendMessage(String text) {
         sendMessage(text, chatId, null);
+    }
+
+    public void sendMessage(String text, ReplyKeyboard keyboard) {
+        sendMessage(text, chatId, keyboard);
     }
 
     protected void sendMessage(String text, Long chatId, ReplyKeyboard keyboard) {

@@ -18,7 +18,7 @@ public class Runner {
     public static void main(String[] args) throws TelegramApiRequestException {
         ApiContextInitializer.init();
         Bot bot = new Bot();
-        new Reminder(bot);
+//        new Reminder(bot);
         new TelegramBotsApi().registerBot(bot);
         logger.info("Bot was registered");
     }

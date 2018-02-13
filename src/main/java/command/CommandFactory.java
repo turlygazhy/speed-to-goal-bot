@@ -25,10 +25,6 @@ public class CommandFactory {
                 return new MyGoalsCommand();
             case 2:
                 return new InputCommand();
-            case 3:
-                return new ClearResultsCommand();
-            case 4:
-                return new SendChartCommand();
             default:
                 throw new CommandNotFoundException();
         }

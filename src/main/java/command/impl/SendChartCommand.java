@@ -6,7 +6,7 @@ import main.Bot;
 public class SendChartCommand extends Command {
     @Override
     public boolean execute() {
-        Bot.sendChart();
+//        Bot.sendChart();
         return true;
     }
 }

@@ -1,35 +1,27 @@
 package command.impl;
 
 import command.Command;
+import dao.DaoFactory;
 import entity.Const;
+import entity.Goal;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
+
+import java.util.List;
 
 /**
  * Created by Yerassyl_Turlygazhy on 12-Dec-17.
  */
 public class MyGoalsCommand extends Command {
-    private int workedHours = 0;
-    private int learnedMinutes = 0;
 
     @Override
     public boolean execute() {
-        if (waitingType == null) {
-            sendResults();
+        List<Goal> goals = DaoFactory.getFactory().getGoalDao().selectAll();
+        String result = "Goals:";
+        for (Goal goal : goals) {
+            result += "\n" + goal.getId() + " - " + goal.getName();
         }
-        return false;
+        sendMessage(result);
+        return true;
     }
-
-    private void sendResults() {
-        String result = "Worked hours = " + workedHours +
-                "\nLearned minutes = " + learnedMinutes;
-        sendMessage(result, chatId, getKeyboard(1));
-    }
-
-
-
-    private String[] row(String... s) {
-        return s;
-    }
-
 
 }

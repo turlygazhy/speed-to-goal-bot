@@ -6,8 +6,8 @@ import main.Bot;
 public class ClearResultsCommand extends Command {
     @Override
     public boolean execute() {
-        Bot.clearResults();
-        Bot.sendResults();
+//        Bot.clearResults();
+//        Bot.sendResults();
         return true;
     }
 }
