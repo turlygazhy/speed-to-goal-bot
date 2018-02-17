@@ -45,4 +45,14 @@ public class GoalDao {
             throw new RuntimeException(e);
         }
     }
+
+    public Goal select(int goalId) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement("SELECT * FROM GOAL where id=?");
+        ps.setInt(1, goalId);
+        ps.execute();
+        ResultSet rs = ps.getResultSet();
+        rs.next();
+        String name = rs.getString(2);
+        return new Goal(goalId, name);
+    }
 }

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
-import reminder.Reminder;
+//import reminder.Reminder;
 
 /**
  * Created by Yerassyl_Turlygazhy on 12-Dec-17.

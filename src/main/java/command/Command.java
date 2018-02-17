@@ -1,9 +1,7 @@
 package command;
 
 import dao.DaoFactory;
-import dao.impl.ButtonDao;
-import dao.impl.KeyboardMarkUpDao;
-import dao.impl.MessageDao;
+import dao.impl.*;
 import entity.WaitingType;
 import main.Bot;
 import org.telegram.telegrambots.api.methods.ParseMode;
@@ -34,6 +32,9 @@ public abstract class Command {
     protected ButtonDao buttonDao = factory.getButtonDao();
     protected KeyboardMarkUpDao keyboardMarkUpDao = factory.getKeyboardMarkUpDao();
     protected MessageDao messageDao = factory.getMessageDao();
+    protected GoalDao goalDao = DaoFactory.getFactory().getGoalDao();
+    protected ResultDao resultDao = DaoFactory.getFactory().getResultDao();
+
     protected Message updateMessage;
 
     public abstract boolean execute();

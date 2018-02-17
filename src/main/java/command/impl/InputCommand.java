@@ -2,8 +2,10 @@ package command.impl;
 
 import command.Command;
 import dao.DaoFactory;
+import dao.impl.GoalDao;
 import entity.Button;
 import entity.Goal;
+import entity.Result;
 import entity.WaitingType;
 import main.Bot;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
@@ -12,6 +14,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,17 +37,24 @@ public class InputCommand extends Command {
                 try {
                     bot.editMessageText(
                             new EditMessageText()
-                                    .setText("Please wait...")
+                                    .setText("Send how much time you spend in minutes for goal " + goalDao.select(goalId).getName())
                                     .setChatId(chatId)
+                                    .setMessageId(updateMessage.getMessageId())
                     );
-                } catch (TelegramApiException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-                sendMessage("Send how much time you spend in minutes");
                 waitingType = WaitingType.MINUTES;
                 return false;
             case MINUTES:
-
+                int minutes = Integer.parseInt(updateMessageText);
+                try {
+                    resultDao.insert(new Result(minutes, goalId));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                sendMessage("Successfully saved");
+                return true;
             default:
                 throw new RuntimeException();
         }
@@ -54,7 +64,7 @@ public class InputCommand extends Command {
         InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
 
-        List<Goal> goals = DaoFactory.getFactory().getGoalDao().selectAll();
+        List<Goal> goals = goalDao.selectAll();
 
         for (Goal goal : goals) {
             List<InlineKeyboardButton> row = new ArrayList<>();

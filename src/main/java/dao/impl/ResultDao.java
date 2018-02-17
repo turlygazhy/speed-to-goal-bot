@@ -19,7 +19,10 @@ public class ResultDao {
         this.connection = connection;
     }
 
-    public void insert(Result result) {
-        // TODO: 13.02.2018 ihere
+    public void insert(Result result) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement("INSERT INTO RESULT VALUES(default, ?, ?)");
+        ps.setInt(1, result.getGoalId());
+        ps.setInt(2, result.getMinutes());
+        ps.execute();
     }
 }

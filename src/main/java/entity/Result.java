@@ -5,13 +5,18 @@ package entity;
  */
 public class Result {
     private int id;
-    private String date;
-    private double result;
+    private int minutes;
+    private int goalId;
 
-    public Result(int id, String date, double result) {
+    public Result(int id, int minutes, int goalId) {
         this.id = id;
-        this.date = date;
-        this.result = result;
+        this.minutes = minutes;
+        this.goalId = goalId;
+    }
+
+    public Result(int minutes, int goalId) {
+        this.minutes = minutes;
+        this.goalId = goalId;
     }
 
     public int getId() {
@@ -22,19 +27,19 @@ public class Result {
         this.id = id;
     }
 
-    public String getDate() {
-        return date;
+    public int getMinutes() {
+        return minutes;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
     }
 
-    public double getResult() {
-        return result;
+    public int getGoalId() {
+        return goalId;
     }
 
-    public void setResult(double result) {
-        this.result = result;
+    public void setGoalId(int goalId) {
+        this.goalId = goalId;
     }
 }
