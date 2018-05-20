@@ -1,13 +1,9 @@
 package command;
 
-import command.impl.ClearResultsCommand;
-import command.impl.InputCommand;
-import command.impl.MyGoalsCommand;
-import command.impl.SendChartCommand;
+import command.impl.*;
 import dao.DaoFactory;
 import dao.impl.ButtonDao;
 import exception.CommandNotFoundException;
-import org.telegram.telegrambots.api.objects.Update;
 
 /**
  * Created by Yerassyl_Turlygazhy on 12-Dec-17.
@@ -25,6 +21,12 @@ public class CommandFactory {
                 return new MyGoalsCommand();
             case 2:
                 return new InputCommand();
+            case 5:
+                return new ShowTimeWindowsCommand();
+            case 6:
+                return new NewScheduleCommand();
+            case 7:
+                return new ShowMainMenuCommand();
             default:
                 throw new CommandNotFoundException();
         }

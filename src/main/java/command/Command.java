@@ -6,6 +6,7 @@ import entity.WaitingType;
 import main.Bot;
 import org.telegram.telegrambots.api.methods.ParseMode;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
@@ -34,6 +35,7 @@ public abstract class Command {
     protected MessageDao messageDao = factory.getMessageDao();
     protected GoalDao goalDao = DaoFactory.getFactory().getGoalDao();
     protected ResultDao resultDao = DaoFactory.getFactory().getResultDao();
+    protected ScheduleDao scheduleDao = DaoFactory.getFactory().getScheduleDao();
 
     protected Message updateMessage;
 
@@ -54,6 +56,22 @@ public abstract class Command {
 
     protected void sendMessage(String text) {
         sendMessage(text, chatId, null);
+    }
+
+    protected void sendMessage(int messageId) {
+        try {
+            entity.Message message = messageDao.getMessage(messageId);
+            sendMessage(message);
+        } catch (SQLException | TelegramApiException ignored) {
+        }
+    }
+
+    private void sendMessage(entity.Message message) throws TelegramApiException, SQLException {
+        SendPhoto photo = message.getSendPhoto();
+        if (photo != null) {
+            bot.sendPhoto(photo.setChatId(chatId));
+        }
+        sendMessage(message.getSendMessage().getText(), keyboardMarkUpDao.select(message.getKeyboardMarkUpId()));
     }
 
     public void sendMessage(String text, ReplyKeyboard keyboard) {

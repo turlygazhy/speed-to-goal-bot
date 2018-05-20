@@ -18,7 +18,7 @@ public class Chart {
     private String fileName;
     private Map<Date, Integer> data = new LinkedHashMap<>();
 
-    public String getChart(List<Result> results) {
+    /*public String getChart(List<Result> results) {
         List<Double> yData = new ArrayList<>();
         List<Date> xData = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class Chart {
             e.printStackTrace();
         }
         return fullPath;//возвращается полный путь к файлу(картинке) диаграммы
-    }
+    }*/
 
     public void setFileName(String fileName) {
         this.fileName = fileName;

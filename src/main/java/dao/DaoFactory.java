@@ -45,4 +45,7 @@ public class DaoFactory {
         return new GoalDao(connection);
     }
 
+    public ScheduleDao getScheduleDao() {
+        return new ScheduleDao(connection);
+    }
 }
