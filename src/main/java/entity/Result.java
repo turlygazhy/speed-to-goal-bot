@@ -69,6 +69,6 @@ public class Result {
     }
 
     public String getDateAsString() {
-        return date.toString(DateUtil.dd_mm_yy);
+        return date.toString(DateUtil.dd_MM_yy);
     }
 }
