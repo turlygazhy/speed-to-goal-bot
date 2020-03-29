@@ -1,7 +1,10 @@
 package dao;
 
 import connection_pool.ConnectionPool;
-import dao.impl.*;
+import dao.impl.ButtonDao;
+import dao.impl.KeyboardMarkUpDao;
+import dao.impl.MessageDao;
+import dao.impl.ResultDao;
 
 import java.sql.Connection;
 
@@ -39,13 +42,5 @@ public class DaoFactory {
 
     public ResultDao getResultDao() {
         return new ResultDao(connection);
-    }
-
-    public GoalDao getGoalDao() {
-        return new GoalDao(connection);
-    }
-
-    public ScheduleDao getScheduleDao() {
-        return new ScheduleDao(connection);
     }
 }
