@@ -16,7 +16,7 @@ import java.util.Locale;
  * Created by Yerassyl_Turlygazhy on 06-Mar-17.
  */
 public class DateUtil {
-    private static SimpleDateFormat ddMMyy = new SimpleDateFormat("dd.MM.yy");
+    public static final String dd_mm_yy = "dd.mm.yy";
     private static SimpleDateFormat ddMM = new SimpleDateFormat("dd.MM");
 
     //получение ближайшего прошедшего понедельника

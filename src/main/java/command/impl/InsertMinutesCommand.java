@@ -1,20 +1,27 @@
 package command.impl;
 
 import command.Command;
+import entity.Result;
 import entity.WaitingType;
 
 public class InsertMinutesCommand extends Command {
+    private Result result;
+
     @Override
     public boolean execute() {
-        if(waitingType==null){
+        if (waitingType == null) {
+            result = new Result(chatId);
             sendMessage(1);//send minutes
             waitingType = WaitingType.MINUTES;
             return false;
         }
-        switch (waitingType){
+        switch (waitingType) {
             case MINUTES:
-                // TODO: 29.03.20  
+                result.setMinutes(Integer.parseInt(updateMessageText));
+                resultDao.insert(result);
+//                showTodaysChart() todo
+                return true;
         }
-        return false;
+        throw new RuntimeException();
     }
 }

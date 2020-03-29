@@ -33,9 +33,7 @@ public abstract class Command {
     protected ButtonDao buttonDao = factory.getButtonDao();
     protected KeyboardMarkUpDao keyboardMarkUpDao = factory.getKeyboardMarkUpDao();
     protected MessageDao messageDao = factory.getMessageDao();
-    protected GoalDao goalDao = DaoFactory.getFactory().getGoalDao();
     protected ResultDao resultDao = DaoFactory.getFactory().getResultDao();
-    protected ScheduleDao scheduleDao = DaoFactory.getFactory().getScheduleDao();
 
     protected Message updateMessage;
 
