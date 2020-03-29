@@ -11,13 +11,11 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.sql.SQLException;
-import java.util.Objects;
 
 /**
  * Created by Yerassyl_Turlygazhy on 12-Dec-17.
  */
 public class Bot extends TelegramLongPollingBot {
-    public final static Long ADMIN_CHAT_ID = 293188753L;
     private Command command;
 
     @Override
@@ -32,9 +30,6 @@ public class Bot extends TelegramLongPollingBot {
             updateMessageText = updateMessage.getText();
         }
         Long chatId = updateMessage.getChatId();
-        if (!checkAccess(chatId)) {
-            return;
-        }
         try {
             command = CommandFactory.getCommand(updateMessageText);
         } catch (Exception e1) {
@@ -68,20 +63,6 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    private boolean checkAccess(Long chatId) {
-        if (!Objects.equals(chatId, ADMIN_CHAT_ID)) {
-            try {
-                sendMessage(new SendMessage()
-                        .setChatId(chatId)
-                        .setText("This is private bot, sorry you cannot use it.")
-                );
-            } catch (TelegramApiException ignored) {
-            }
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public String getBotUsername() {
         return null;
@@ -89,6 +70,6 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "347871545:AAHm1ZsUSGknq18dbTyJgk_ETji25dasvGQ";//https://web.telegram.org/#/im?p=@q_personal_assistant_bot
+        return "1132256966:AAHxT1dVAFyx-u7s1lSJYCTl8dhzx1bx8tE";//t.me/speedtogoalbot
     }
 }

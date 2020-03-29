@@ -18,15 +18,7 @@ public class CommandFactory {
 
         switch (commandId) {
             case 1:
-                return new MyGoalsCommand();
-            case 2:
-                return new InputCommand();
-            case 5:
-                return new ShowTimeWindowsCommand();
-            case 6:
-                return new NewScheduleCommand();
-            case 7:
-                return new ShowMainMenuCommand();
+                return new InsertMinutesCommand();
             default:
                 throw new CommandNotFoundException();
         }
