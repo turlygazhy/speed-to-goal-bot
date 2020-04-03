@@ -13,6 +13,7 @@ public class Result {
     private LocalDate date;
     private int hour;
     private int minutes;
+    private int hourId;//can be 1, 2, 3, 4, 5 or 6
 
     public Result(long userId) {
         date = LocalDate.now();
@@ -66,6 +67,14 @@ public class Result {
 
     public void setMinutes(int minutes) {
         this.minutes = minutes;
+    }
+
+    public int getHourId() {
+        return hourId;
+    }
+
+    public void setHourId(int hourId) {
+        this.hourId = hourId;
     }
 
     public String getDateAsString() {

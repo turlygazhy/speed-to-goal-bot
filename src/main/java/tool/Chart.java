@@ -5,6 +5,7 @@ import org.knowm.xchart.*;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
@@ -13,42 +14,42 @@ import java.util.List;
  * Created by user on 3/2/17.
  */
 public class Chart {
-    private static final String PATH = "C:\\bots-data\\charts";
-    //    private String PATH = "/home/user/Documents/charts";
-    private String fileName;
-    private Map<Date, Integer> data = new LinkedHashMap<>();
+    //    private static final String PATH = "C:\\bots-data\\charts";
+    private static final String PATH = "/home/user/charts";
+//    private Map<Date, Integer> data = new LinkedHashMap<>();
 
-    /*public String getChart(List<Result> results) {
-        List<Double> yData = new ArrayList<>();
-        List<Date> xData = new ArrayList<>();
+    public static String getChart(List<Result> results) {
+
+        List<Integer> yData = new ArrayList<>();
+        List<Integer> xData = new ArrayList<>();
 
         for (Result result : results) {
-            xData.add(DateUtil.getDate(result.getDate()));
-            yData.add(result.getResult());
+            xData.add(result.getHour());
+            yData.add(result.getMinutes());
         }
 
         // Create Chart
         XYChart chart = new XYChart(500, 400);
         XYSeries series = chart.addSeries("y(x)", xData, yData);//добавляем данные в x и y оси, указана
-                                                                                //зависимость y от x
+        //зависимость y от x
         series.setMarker(SeriesMarkers.CIRCLE);//устанавливается маркер (??)
 
-        String fullPath = PATH + "/chart";
+        String fullPath = PATH + "/chart" + new Random().nextInt(1000) + ".jpg";
         try {
             BitmapEncoder.saveBitmap(chart, fullPath, BitmapEncoder.BitmapFormat.JPG);//создание jpg-картинки диаграммы
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return fullPath;//возвращается полный путь к файлу(картинке) диаграммы
-    }*/
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
     }
 
-    public void addPair(Date date, int result) {
-        data.put(date, result);
-    }
+//    public void setFileName(String fileName) {
+//        this.fileName = fileName;
+//    }
+
+//    public void addPair(Date date, int result) {
+//        data.put(date, result);
+//    }
 
 //    public String getChart(String goalName, Map<String, List<SavedResult>> userNameAndResults) {
 //        String fileName = "chart";

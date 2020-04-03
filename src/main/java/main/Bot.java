@@ -33,7 +33,7 @@ public class Bot extends TelegramLongPollingBot {
         try {
             command = CommandFactory.getCommand(updateMessageText);
         } catch (Exception e1) {
-            System.out.println("No command for '" + updateMessageText + "'");// TODO: 06.01.2018 should be log
+            System.out.println("No command for '" + updateMessageText + "'");
         }
         if (command != null) {
             try {
@@ -44,6 +44,7 @@ public class Bot extends TelegramLongPollingBot {
                 }
             } catch (Exception e) {
                 command = null;
+                e.printStackTrace();
                 sayCannotHandle(chatId);
             }
         } else {
