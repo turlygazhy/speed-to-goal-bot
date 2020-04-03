@@ -20,9 +20,9 @@ public class ConnectionPool {
 
     //data for settings of connection
     private static final int CONNECTION_NUMBER = 1;
-    private static final String JDBC_URL = "jdbc:h2:~/stg";
-    private static final String DB_LOGIN = "user";
-    private static final String DB_PASSWORD = "user";
+    private static final String JDBC_URL = "jdbc:h2:~/stg";// TODO: 04.04.20 from property
+    private static final String DB_LOGIN = "user";// TODO: 04.04.20 from property
+    private static final String DB_PASSWORD = "user";// TODO: 04.04.20 from property
 
     private static BlockingQueue<Connection> connections = new LinkedBlockingQueue<>();
 

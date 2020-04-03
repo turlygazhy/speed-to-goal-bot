@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Chart {
     //    private static final String PATH = "C:\\bots-data\\charts";
-    private static final String PATH = "/home/user/charts";
+    private static final String PATH = "/home/user/charts";// TODO: 04.04.20 from property
 //    private Map<Date, Integer> data = new LinkedHashMap<>();
 
     public static String getChart(List<Result> results) {
