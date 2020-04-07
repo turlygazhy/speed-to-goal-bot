@@ -80,4 +80,16 @@ public class Result {
     public String getDateAsString() {
         return date.toString(DateUtil.dd_MM_yy);
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", date=" + date +
+                ", hour=" + hour +
+                ", minutes=" + minutes +
+                ", hourId=" + hourId +
+                '}';
+    }
 }

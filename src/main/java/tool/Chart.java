@@ -1,14 +1,12 @@
 package tool;
 
-import entity.Result;
-import org.knowm.xchart.*;
-import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by user on 3/2/17.
@@ -18,16 +16,7 @@ public class Chart {
     private static final String PATH = "/home/user/charts";// TODO: 04.04.20 from property
 //    private Map<Date, Integer> data = new LinkedHashMap<>();
 
-    public static String getChart(List<Result> results) {
-
-        List<Integer> yData = new ArrayList<>();
-        List<Integer> xData = new ArrayList<>();
-
-        for (Result result : results) {
-            xData.add(result.getHour());
-            yData.add(result.getMinutes());
-        }
-
+    public static String getChart(List<Integer> yData, List<Integer> xData) {
         // Create Chart
         XYChart chart = new XYChart(500, 400);
         XYSeries series = chart.addSeries("y(x)", xData, yData);//добавляем данные в x и y оси, указана

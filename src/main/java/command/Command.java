@@ -123,8 +123,7 @@ public abstract class Command {
     }
 
     public void showTodaysChart() {
-        List<Result> results = resultDao.selectForToday(chatId);
-        String chart = Chart.getChart(results);
+        String chart =  resultService.getChartForToday();
         try {
             SendPhoto sendPhoto = new SendPhoto();
             sendPhoto.setChatId(chatId);
@@ -133,9 +132,5 @@ public abstract class Command {
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void getChart() {
-        // TODO: 03.04.20 тут мы должны взять минуты и по ним посчитать сколько очком у нас есть
     }
 }

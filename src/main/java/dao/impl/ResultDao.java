@@ -29,11 +29,12 @@ public class ResultDao {
 
     public void insert(Result result) {
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO RESULT VALUES(default, ?, ?, ?, ?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO RESULT VALUES(default, ?, ?, ?, ?, ?)");
             ps.setLong(1, result.getUserId());
             ps.setString(2, result.getDateAsString());
             ps.setInt(3, result.getHour());
             ps.setInt(4, result.getMinutes());
+            ps.setInt(5, result.getHourId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);

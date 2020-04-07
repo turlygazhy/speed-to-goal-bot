@@ -12,7 +12,7 @@ public class InsertMinutesCommand extends Command {
     public boolean execute() {
         if (waitingType == null) {
             result = new Result(chatId);
-            result.setHourId(resultService.getHourId());
+            result.setHourId(resultService.getHourId(result.getHour()));
             sendMessage(1);//send minutes
             waitingType = WaitingType.MINUTES;
             return false;
