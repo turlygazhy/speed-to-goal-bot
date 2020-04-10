@@ -19,6 +19,10 @@ public class CommandFactory {
         switch (commandId) {
             case 1:
                 return new InsertMinutesCommand();
+            case 2:
+                return new ResultsCommand();
+            case 3:
+                return new ShowMainMenuCommand();
             default:
                 throw new CommandNotFoundException();
         }

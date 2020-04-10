@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * ';' - separator for rows
  * ',' - separator for buttons
  */
-public class ButtonDao /*extends AbstractDao*/ {
+public class ButtonDao {
     public static final int COMMAND_ID_COLUMN_INDEX = 3;
     private final Connection connection;
 
@@ -49,13 +49,17 @@ public class ButtonDao /*extends AbstractDao*/ {
         }
     }
 
-    public String getButtonText(int id) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement("SELECT text FROM BUTTON where id=?");
-        ps.setInt(1, id);
-        ps.execute();
-        ResultSet rs = ps.getResultSet();
-        rs.next();
-        return rs.getString(1);
+    public String getButtonText(int id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT text FROM BUTTON where id=?");
+            ps.setInt(1, id);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            rs.next();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Button getButton(int id) throws SQLException {

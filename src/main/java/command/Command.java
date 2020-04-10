@@ -1,10 +1,13 @@
 package command;
 
 import dao.DaoFactory;
-import dao.impl.*;
-import entity.Result;
+import dao.impl.ButtonDao;
+import dao.impl.KeyboardMarkUpDao;
+import dao.impl.MessageDao;
+import dao.impl.ResultDao;
 import entity.WaitingType;
 import main.Bot;
+import org.joda.time.LocalDate;
 import org.telegram.telegrambots.api.methods.ParseMode;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
@@ -17,10 +20,8 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButto
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import service.ResultService;
-import tool.Chart;
 
 import java.io.File;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +124,11 @@ public abstract class Command {
     }
 
     public void showTodaysChart() {
-        String chart =  resultService.getChartForToday();
+        String chart = resultService.getChartForToday();
+        sendChart(chart);
+    }
+
+    private void sendChart(String chart) {
         try {
             SendPhoto sendPhoto = new SendPhoto();
             sendPhoto.setChatId(chatId);
@@ -132,5 +137,10 @@ public abstract class Command {
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected void showChart(LocalDate startDate) {
+        String chart = resultService.getChartIncludingToday(startDate);
+        sendChart(chart);
     }
 }

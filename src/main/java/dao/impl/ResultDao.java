@@ -21,6 +21,7 @@ public class ResultDao {
     public static final int DATE_COLUMN = 3;
     public static final int HOUR_COLUMN = 4;
     public static final int MINUTE_COLUMN = 5;
+    public static final int HOUR_ID_COLUMN_ID = 6;
     private final Connection connection;
 
     public ResultDao(Connection connection) {
@@ -51,12 +52,14 @@ public class ResultDao {
             ResultSet rs = ps.getResultSet();
             List<Result> results = new ArrayList<>();
             while (rs.next()){
-                results.add(new Result(rs.getInt(ID_COLUMN),
+                Result result = new Result(rs.getInt(ID_COLUMN),
                         rs.getLong(USER_ID_COLUMN),
                         DateUtil.getDate(rs.getString(DATE_COLUMN)),
                         rs.getInt(HOUR_COLUMN),
                         rs.getInt(MINUTE_COLUMN)
-                ));
+                );
+                result.setHourId(rs.getInt(HOUR_ID_COLUMN_ID));
+                results.add(result);
             }
             return results;
         } catch (SQLException e) {

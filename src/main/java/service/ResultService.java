@@ -3,6 +3,7 @@ package service;
 import dao.DaoFactory;
 import dao.impl.ResultDao;
 import entity.Result;
+import org.joda.time.LocalDate;
 import tool.Chart;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class ResultService {
         }
     }
 
-    private int getScore(List<Result> results, int hourId) {// TODO: 08.04.20 in DB hour id always 0
+    private int getScore(List<Result> results, int hourId) {
         int minutes = results.stream()
                 .filter(result -> result.getHourId() == hourId)
                 .mapToInt(Result::getMinutes)
@@ -134,5 +135,9 @@ public class ResultService {
         } else {
             return maxHourId + 1;
         }
+    }
+
+    public String getChartIncludingToday(LocalDate startDate) {
+        return null;// TODO: 10.04.20
     }
 }
