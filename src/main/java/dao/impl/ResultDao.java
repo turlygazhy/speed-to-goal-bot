@@ -1,7 +1,6 @@
 package dao.impl;
 
 import entity.Result;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import tool.DateUtil;
 
@@ -43,15 +42,19 @@ public class ResultDao {
     }
 
     public List<Result> selectForToday(Long chatId) {
+        return selectFor(LocalDate.now(), chatId);
+    }
+
+    public List<Result> selectFor(LocalDate date, Long chatId) {// TODO: 10.04.20 test it
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM RESULT where user_id=? and date=?");
             ps.setLong(1, chatId);
-            ps.setString(2, DateTime.now().toString(DateUtil.dd_MM_yy));
+            ps.setString(2, date.toString(DateUtil.dd_MM_yy));
             ps.execute();
 
             ResultSet rs = ps.getResultSet();
             List<Result> results = new ArrayList<>();
-            while (rs.next()){
+            while (rs.next()) {
                 Result result = new Result(rs.getInt(ID_COLUMN),
                         rs.getLong(USER_ID_COLUMN),
                         DateUtil.getDate(rs.getString(DATE_COLUMN)),

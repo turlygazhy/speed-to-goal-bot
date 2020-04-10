@@ -138,6 +138,7 @@ public class ResultService {
     }
 
     public String getChartIncludingToday(LocalDate startDate) {
+        resultDao.selectFor(startDate, chatId);
         return null;// TODO: 10.04.20
     }
 }
