@@ -12,8 +12,8 @@ import java.util.Random;
  * Created by user on 3/2/17.
  */
 public class Chart {
-    //    private static final String PATH = "C:\\bots-data\\charts";
-    private static final String PATH = "/home/user/charts";// TODO: 04.04.20 from property
+        private static final String PATH = "C:\\bots-data\\charts";
+//    private static final String PATH = "/home/user/charts";// TODO: 04.04.20 from property
 //    private Map<Date, Integer> data = new LinkedHashMap<>();
 
     public static String getChart(List<Integer> yData, List<Integer> xData) {
