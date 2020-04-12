@@ -18,6 +18,14 @@ public class ResultService {
         this.chatId = chatId;
     }
 
+    public static Integer getFinalScore(List<Result> results) {
+        int finalScore = 0;
+        for (int i = 1; i < 7; i++) {
+            finalScore = finalScore + getScore(results, i);
+        }
+        return finalScore;
+    }
+
     public String getChartForToday() {
         List<Result> results = resultDao.selectForToday(chatId);
 
@@ -87,13 +95,13 @@ public class ResultService {
         }
     }
 
-    private int getScore(List<Result> results, int hourId) {
+    private static int getScore(List<Result> results, int hourId) {
         int minutes = results.stream()
                 .filter(result -> result.getHourId() == hourId)
                 .mapToInt(Result::getMinutes)
                 .reduce(0, Integer::sum);
         if (minutes < 10) {
-            if (hourId == 0) {
+            if (hourId == 6) {
                 return 0;
             }
             return -10;
@@ -138,7 +146,12 @@ public class ResultService {
     }
 
     public String getChartIncludingToday(LocalDate startDate) {
-        resultDao.selectFor(startDate, chatId);
+        LocalDate now = LocalDate.now();
+        for (; startDate.isBefore(now); startDate = startDate.plusDays(1)) {
+            // TODO: 12.04.20 we need score
+            List<Result> results = resultDao.select(startDate, chatId);
+            System.out.println();
+        }
         return null;// TODO: 10.04.20
     }
 }

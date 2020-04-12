@@ -1,10 +1,7 @@
 package dao;
 
 import connection_pool.ConnectionPool;
-import dao.impl.ButtonDao;
-import dao.impl.KeyboardMarkUpDao;
-import dao.impl.MessageDao;
-import dao.impl.ResultDao;
+import dao.impl.*;
 
 import java.sql.Connection;
 
@@ -42,5 +39,9 @@ public class DaoFactory {
 
     public ResultDao getResultDao() {
         return new ResultDao(connection);
+    }
+
+    public ScoreDao getScoreDao() {
+        return new ScoreDao(connection);
     }
 }
