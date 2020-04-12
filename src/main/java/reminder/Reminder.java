@@ -29,8 +29,8 @@ public class Reminder {
         DateTime nextNight = DateTime.now().plusDays(1).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(1);
         logger.info("new reminder time: " + nextNight);
         EveryNightTask everyNightTask = new EveryNightTask(bot, this);
-//        timer.schedule(everyNightTask, nextNight.toDate());//todo return
-        timer.schedule(everyNightTask, DateTime.now().plusSeconds(1).toDate());//todo delete only for test
+        timer.schedule(everyNightTask, nextNight.toDate());//todo return
+//        timer.schedule(everyNightTask, DateTime.now().plusSeconds(1).toDate());//todo delete only for test
     }
 
 }
